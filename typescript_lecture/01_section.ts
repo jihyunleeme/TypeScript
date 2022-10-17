@@ -270,3 +270,15 @@ r = 234;
 
 let target: number[] = [];
 forEach([1, 2, 3], (el) => target.push(el));
+
+/* unknown과 any(그리고 타입 대입가능표) */
+// any 타입선언 포기, unknown 지금 당장 모르겠고 나중에 쓰겠다.
+const choco: unknown = chiwawa.bark();
+(choco as Dog).bark();
+
+// unknown을 사용하는 대표적 경우 try,catch문에서 unknown
+try {
+} catch (error) {
+  (error as Error).message; // typescript의 Error
+  // (error as AxiosError) // typescript의 Error
+}
