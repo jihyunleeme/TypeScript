@@ -342,7 +342,7 @@ const bird = { type: "bird" };
 const dog = { type: "dog" };
 const cat = { type: "cat" };
 
-function myAnimal(a: bird | dog | cat) {
-  if (a.type === "bird") {
-  }
-}
+// function myAnimal(a: bird | dog | cat) {
+//   if (a.type === "bird") {
+//   }
+// }
