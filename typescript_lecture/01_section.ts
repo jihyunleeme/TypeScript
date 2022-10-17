@@ -282,3 +282,67 @@ try {
   (error as Error).message; // typescript의 Error
   // (error as AxiosError) // typescript의 Error
 }
+
+/* 타입 좁히기(타입가드) */
+function numOrStr1(a: number | string) {
+  if (typeof a === "string") {
+    a.split(",");
+  } else {
+    // ts가 if else문에서 원시값을 체크
+    a.toFixed(1);
+  }
+}
+
+function numOrStr(a: number | string) {
+  if (typeof a === "number") {
+    a.toFixed(1);
+  }
+
+  if (typeof a === "string") {
+    a.charAt(1);
+  }
+}
+
+numOrStr("123");
+numOrStr(1);
+
+// as - 남이 만든 타입이 틀렸을때, 억지로 바꿀때 as 사용하기
+
+function numOrNumArray(a: number | number[]) {
+  if (Array.isArray(a)) {
+    a.concat(4);
+  } else {
+    a.toFixed(5);
+  }
+}
+
+numOrNumArray(123);
+numOrNumArray([1, 2, 3]);
+
+class A {
+  // class 자체가 타입이 될 수 있음
+  aaa() {}
+}
+
+class B {
+  bb() {}
+}
+
+function aOrB(param: A | B) {
+  if (param instanceof A) {
+    param.aaa();
+  }
+}
+
+aOrB(new A());
+aOrB(new B());
+
+// 타입이라는 속성을 하나씩 넣는 습관을 들이자
+const bird = { type: "bird" };
+const dog = { type: "dog" };
+const cat = { type: "cat" };
+
+function myAnimal(a: bird | dog | cat) {
+  if (a.type === "bird") {
+  }
+}
