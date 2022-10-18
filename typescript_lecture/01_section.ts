@@ -63,7 +63,7 @@ array.push("hello");
 // non-null assertion
 /*
  * null이나 undefined가 아님을 보증하는 !
- * const head = document.querySelectorAll('#head')!;
+ * const head = document.querySelector('#head')!;
  * 하지만, 비추 사용하지 않기 if(head){} 으로 안정성 챙기기
  */
 
@@ -211,7 +211,7 @@ const person: IDoSomthing = { talk() {}, eat() {}, shit() {}, sleep() {} };
 
 /*
  * 타입을 집합으로 생각하자 (좁은타입과 넓은 타입)
- * 좁은 타입은 넓은 타입에 넣을 수 있지만, 넓은 타입을 좁은 타입에 넣을 수 없다.
+ * 넓은 타입에 좁은 타입은  넣을 수 있지만, 좁은 타입에 넓은 타입을 넣을 수 없다.
  */
 
 // 1. union, intersection
@@ -271,8 +271,25 @@ r = 234;
 let target: number[] = [];
 forEach([1, 2, 3], (el) => target.push(el));
 
+// type으로 사용하지 않으면 객체끼리 비교, 객체를 구분할때는 in을 사용하자
+/* 10/17 다시 정리하기!
+const sparrow = {peak()};
+const tiger = {roar()}
+const squirel = {collect()}
+
+if ('peak' in a) {
+  a
+}
+*/
+
+/* 커스텀 타입가드 (is, 형식 조건자) */
+// 정확한 타입을 구분해주는 커스텀 함수 직접 만들수 있다
+// ex) promise 실패한 것만 모아놓기
+// promise settled
+
 /* unknown과 any(그리고 타입 대입가능표) */
 // any 타입선언 포기, unknown 지금 당장 모르겠고 나중에 쓰겠다.
+
 const choco: unknown = chiwawa.bark();
 (choco as Dog).bark();
 
