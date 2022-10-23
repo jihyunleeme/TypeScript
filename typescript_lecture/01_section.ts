@@ -363,3 +363,83 @@ const cat = { type: "cat" };
 //   if (a.type === "bird") {
 //   }
 // }
+
+// 타입을 구분해주는 커스텀 함수를 직접 - is
+
+/* {}와 Object */
+
+const test1: {} = true;
+// const test2: {} = null;
+// const test2: {} = undefined;
+const allType: Object = "hi"; //  {}, Object 모든 타입 (null, undefined 제외)
+const xx: object = { hello: "wolrd" }; // 우리가 타입은 object이다 주의하기
+const yy: object = { aaa: "hello" }; // object 지양, interface, type, class
+const z: unknown = "hi"; // 모든 값을 받을 수있음
+
+// unknown v4.8.x
+// unknown = {} | null | undefined
+if (z) {
+  z;
+}
+
+/* readonly */
+// 실수로 바꾸는 것을 못 바꾸도록 막을 수 있다
+interface AA {
+  readonly a: string;
+  b: string;
+}
+
+const aaa: AA = { a: "hello", b: "world" };
+// aaa.a = '안녕' // readonly properties기 때문에 assign할 수 없음.
+
+/* 인덱스드 시그니처 */
+// 어떤 키든 간에 문자열, 숫자... 등으로 지정
+type Ab = { a: string; b: string; c: string; d: string }; // 와 같은 형태를
+type Abc = { [key: string]: number };
+//             ^ 모든 key string, ^ 모든 value가 number
+
+/* 맵드 타입스 */
+type D = "Human" | "Mammal" | "Animal"; // interface로는 | 가 되지 않으니 type으로 작성하기
+type E = { [key in D]: D };
+
+/* 클래스의 새로운 기능들 */
+class F {
+  a: string;
+  b: number;
+
+  constructor(a: string, b: number = 123) {
+    // 기본값이 있을 때 ? 붙이지 않음, b?: number 에러
+    // 생성자에 매개변수
+    this.a = "123";
+    this.b = 123;
+  }
+
+  method() {}
+}
+
+type FF = F; // class의 이름은 그 자체로 타입이 됨. 클래스를 가르키는 것이 아니라 new Bb()를 가르킴
+const ff: F = new F("123");
+
+// 타입스크립트의 private을 되도록 사용하자, 정교
+// 자바스크립트에서는 public으로 바뀐다고 해도 타입스트립트 단계에서 애러를 뱉어내기 때문에
+// 타입스크립트의 private을 사용하자
+class G {
+  private a: string = "123";
+  #b: number = 123;
+  protected c: string = "hello";
+  // 자바스크립트에서 제공하는 #, private
+
+  method() {
+    console.log(this.a, this.#b); // 자기 클래스 내부에서만 쓸 수 있음
+  }
+}
+
+interface H {
+  readonly a: string;
+  b: string;
+}
+
+class I implements H {
+  a: string = '123';
+  b: string = 'world';
+}
