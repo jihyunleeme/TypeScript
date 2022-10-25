@@ -439,7 +439,56 @@ interface H {
   b: string;
 }
 
+/* 클래스를 implements로 통제 가능 */
 class I implements H {
-  a: string = '123';
-  b: string = 'world';
+  readonly a: string = "123";
+  // protected b: string = "world";
+  b: string = "world";
+  c: string = "wow";
+
+  method() {
+    console.log(this.a);
+    console.log(this.b);
+    console.log(this.c);
+  }
 }
+
+class J extends I {
+  method() {
+    console.log(this.a);
+    console.log(this.b);
+    console.log(this.c);
+  }
+}
+new J().a; // private 접근불가, 상속한 곳에서는 불가
+new J().b; // protected 인스턴스에서 불가, 상속한 곳에서는 가능
+new J().c; // public 안밖에서 자유롭게 가능
+
+/* 
+            public    protected     private
+클래스 내부      O          O             O
+인스턴스        O          X            X
+상속 클래스      O          O            X
+
+- 컴파일 이후 interface 자바스크립트 파일로는 없어진다
+- 클래스는 그 자체로 타입
+- 객체지향의 원칙 : 추상에 의존하고 구현에 의존하지 말라.
+  - interface 추상
+  - class 구현 
+abstract 키워드를 사용하여 추상 클래스, 메소드 만들 수 있다
+extends로 하지 않고 class로 하자
+*/
+
+/* optional */
+function abc(a: number, b?: number, c?: number) {}
+abc(1);
+abc(1, 2);
+abc(1, 2, 3);
+// abc(1,2,3,4) error
+
+function abcd(...args: number[]) {} // 전부
+abcd(1, 2, 3, 4);
+
+let object2: { a: string; b?: string } = { a: "hello", b: "world" };
+object2 = { a: "hello" };
+
